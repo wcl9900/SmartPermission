@@ -27,8 +27,8 @@ ext{
     siteUrl = 'https://github.com/wcl9900/SmartPermission'    // project homepage
     gitUrl = 'https://github.com/wcl9900/SmartPermission.git' // project git
 
-    groupId = "com.wcl.smartpermission" //组名称
-    artifactId = "library"
+    groupId = "com.wcl" //组名称
+    artifactId = "smartpermission"
 
     repository = "maven"//仓库名称
     userOrgName = "wangchunlong"//组织名称
