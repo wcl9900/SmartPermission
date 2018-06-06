@@ -1,0 +1,43 @@
+apply plugin: 'com.android.library'
+
+android {
+    compileSdkVersion 26
+    defaultConfig {
+        minSdkVersion 15
+        targetSdkVersion 26
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.android.support:appcompat-v7:26.1.0'
+}
+
+ext{
+    versionName = "1.0"//版本号
+    siteUrl = 'https://github.com/wcl9900/SmartPermission'    // project homepage
+    gitUrl = 'https://github.com/wcl9900/SmartPermission.git' // project git
+
+    groupId = "com.wcl.smartpermission" //组名称
+    artifactId = "library"
+
+    repository = "maven"//仓库名称
+    userOrgName = "wangchunlong"//组织名称
+
+    //库描述介绍
+    descRep = "权限申请库"
+    //库版本信息描述
+    descVersion = ""
+}
+
+//    apply from: 'https://raw.githubusercontent.com/wcl9900/jcenter/master/publishJCenter.gradle'
+apply from: 'https://gitee.com/wcl9900/jcenter/raw/master/publishJCenter.gradle'
