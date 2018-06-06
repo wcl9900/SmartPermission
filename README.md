@@ -8,7 +8,7 @@
     repositories {
         jcenter()
     }
-    compile 'com.wcl:smartpermission:1.0'
+    compile 'com.wcl.smartpermission:library:1.0'
     
     SmartPermission.build(this)
                         .addPermissions(
