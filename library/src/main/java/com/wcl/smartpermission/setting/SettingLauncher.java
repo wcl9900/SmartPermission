@@ -22,10 +22,8 @@ public class SettingLauncher {
     }
 
     /**
-     * Start.
-     *
-     * @param requestCode this code will be returned in onActivityResult() when the activity exits.
-     * @return true if successful, otherwise is false.
+     * 打开权限设定界面
+     * @param requestCode
      */
     public void start(int requestCode) {
         Intent intent;

@@ -2,12 +2,11 @@ package com.wcl.smartpermission.setting;
 
 import android.app.Fragment;
 import android.content.Intent;
-import android.net.Uri;
-import android.provider.Settings;
 
 import com.wcl.smartpermission.setting.callback.SettingCallBack;
 
 /**
+ * 权限设定界面Fragment桥接器
  * Created by wangchunlong on 2018/6/7.
  */
 
@@ -20,7 +19,10 @@ public class SettingFragment extends Fragment {
 
     SettingCallBack settingCallBack;
 
+    SettingLauncher settingLauncher;
+
     public SettingFragment() {
+        settingLauncher = new SettingLauncher(this);
     }
 
     public void setSettingCallBack(SettingCallBack settingCallBack) {
@@ -31,10 +33,7 @@ public class SettingFragment extends Fragment {
      * 打开权限设定
      */
     public void openSetting(){
-        Intent intent = new Intent(
-                Settings.ACTION_APPLICATION_DETAILS_SETTINGS);
-        intent.setData(Uri.parse("package:" + getActivity().getPackageName()));
-        startActivityForResult(intent, REQUEST_SETTING_CODE);
+        settingLauncher.start(REQUEST_SETTING_CODE);
     }
 
     @Override
