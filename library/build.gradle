@@ -34,7 +34,7 @@ ext{
     userOrgName = "wangchunlong"//组织名称
 
     //库描述介绍
-    descRep = "权限申请库，旨在简单，无依赖其他库"
+    descRep = "用户权限申请库，旨在使用简单、无其他库依赖"
     //库版本信息描述
     descVersion = ""
 }

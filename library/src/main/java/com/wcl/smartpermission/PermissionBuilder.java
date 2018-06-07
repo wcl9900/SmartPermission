@@ -4,12 +4,18 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 
+import com.wcl.smartpermission.callback.DeniedCallBack;
+import com.wcl.smartpermission.callback.GrantCallBack;
+
 import java.util.ArrayList;
 
 public class PermissionBuilder{
     Activity activity;
     ArrayList<String> permissionList;
     SmartPermissionCallBack permissionCallBack;
+
+    GrantCallBack grantCallBack;
+    DeniedCallBack deniedCallBack;
 
     PermissionBuilder(Activity activity) {
         this.activity = activity;
@@ -55,6 +61,26 @@ public class PermissionBuilder{
     }
 
     /**
+     * 设定所有授权成功回调
+     * @param grantCallBack
+     * @return
+     */
+    public PermissionBuilder callBackGrant(GrantCallBack grantCallBack){
+        this.grantCallBack = grantCallBack;
+        return this;
+    }
+
+    /**
+     * 权限被禁止回调
+     * @param deniedCallBack
+     * @return
+     */
+    public PermissionBuilder callBackDenied(DeniedCallBack deniedCallBack){
+        this.deniedCallBack = deniedCallBack;
+        return this;
+    }
+
+    /**
      * 启动权限申请
      */
     public void request(){
@@ -74,7 +100,11 @@ public class PermissionBuilder{
         }
 
         PermissionFragment permissionFragment = (PermissionFragment) fragment;
+
         permissionFragment.setPermissionCallBack(permissionCallBack);
+        permissionFragment.setGrantCallBack(grantCallBack);
+        permissionFragment.setDeniedCallBack(deniedCallBack);
+
         permissionFragment.requestPermissions(permissionList);
     }
 }

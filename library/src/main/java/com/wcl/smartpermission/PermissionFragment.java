@@ -5,6 +5,10 @@ import android.content.pm.PackageManager;
 import android.os.Build;
 import android.support.annotation.NonNull;
 
+import com.wcl.smartpermission.callback.DeniedCallBack;
+import com.wcl.smartpermission.callback.GrantCallBack;
+
+import java.util.ArrayList;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,6 +27,8 @@ public class PermissionFragment extends Fragment {
     public static int REQUEST_PERMISSION_CODE = 111;
 
     private SmartPermissionCallBack permissionCallBack;
+    private GrantCallBack grantCallBack;
+    private DeniedCallBack deniedCallBack;
 
     private Map<String, Boolean> permissionGrantResultMap;
 
@@ -32,6 +38,14 @@ public class PermissionFragment extends Fragment {
 
     public void setPermissionCallBack(SmartPermissionCallBack permissionCallBack) {
         this.permissionCallBack = permissionCallBack;
+    }
+
+    public void setGrantCallBack(GrantCallBack grantCallBack) {
+        this.grantCallBack = grantCallBack;
+    }
+
+    public void setDeniedCallBack(DeniedCallBack deniedCallBack) {
+        this.deniedCallBack = deniedCallBack;
     }
 
     public void requestPermissions(List<String> permissionList){
@@ -60,15 +74,38 @@ public class PermissionFragment extends Fragment {
     }
 
     private void handlePermissionCallBack(){
-        if(permissionCallBack == null) return;
         boolean grantAll = true;
         Set<String> permissions = permissionGrantResultMap.keySet();
+        ArrayList<String> grantPermissionList = new ArrayList<>();
+        ArrayList<String> deniedPermissionList = new ArrayList<>();
+
         for (String permission : permissions){
            boolean grant = permissionGrantResultMap.get(permission);
             grantAll &= grant;
-            permissionCallBack.grantEach(permission, grant);
+            if(grant){
+                grantPermissionList.add(permission);
+            }
+            else {
+                deniedPermissionList.add(permission);
+            }
+            if(permissionCallBack != null) {
+                permissionCallBack.grantEach(permission, grant);
+            }
         }
-        permissionCallBack.grantAll(grantAll);
+        if(permissionCallBack != null) {
+            permissionCallBack.grantAll(grantAll);
+        }
+        if(grantAll){
+            if(grantCallBack != null){
+                grantCallBack.grant(grantPermissionList);
+            }
+        }
+        else {
+            if(deniedCallBack != null){
+                List<String> permissionNames = Permission.transformText(getActivity(), deniedPermissionList);
+                deniedCallBack.denied(deniedPermissionList, permissionNames);
+            }
+        }
         release();
     }
 
